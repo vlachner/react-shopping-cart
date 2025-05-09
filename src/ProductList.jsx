@@ -8,10 +8,22 @@ import { addItem } from './CartSlice';
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
+
+    const cart = useSelector(state => state.cart.items)
+    const dispatch = useDispatch();
+
     const [addedToCart, setAddedToCart] = useState({});
 
-    const cartItems = useSelector(state => state.cart)
-    const dispatch = useDispatch();
+    useEffect(() => {
+        const map = {};
+        cart.forEach(item => {
+            if (item.quantity > 0) {
+                map[item.name] = true;
+            }
+        });
+        setAddedToCart(map);
+    }, [cart]);
+
 
 
     const plantsArray = [
@@ -264,9 +276,6 @@ function ProductList({ onHomeClick }) {
 
     const handleAddToCart = (product) => {
         dispatch(addItem(product))
-        setAddedToCart((currentState) => ({ ...currentState, [product.name]: true }))
-        console.log(cartItems)
-        console.log(addedToCart)
     }
 
     return (
@@ -302,10 +311,11 @@ function ProductList({ onHomeClick }) {
                                         <p className='product-price'>{plant.cost}</p>
                                         <p className='product-description'>{plant.description}</p>
                                         <button
-                                            className='product-button'
+                                            className={`product-button ${addedToCart[plant.name] ? 'disabled' : ''}`}
                                             onClick={() => handleAddToCart(plant)}
-                                            disabled={addedToCart[plant.name]}>
-                                            <span>{!addedToCart[plant.name] ? 'Add to cart' :  'Added' }</span>
+                                            disabled={addedToCart[plant.name]}
+                                        >
+                                            <span>{!addedToCart[plant.name] ? 'Add to cart' : 'Added'}</span>
                                         </button>
                                     </div>
                                 )}
