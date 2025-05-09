@@ -60,6 +60,13 @@ body {
     justify-content: center;
 }
 
+.category-title {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
 /* Product Card */
 .product-card {
     flex: 0 0 calc(33.33% - 20px); /* Adjust width for 3 cards per row with 20px gap */
@@ -106,10 +113,16 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
     margin-top: 10px;
+    border-radius: 5px;
 }
 
 .product-button:hover {
     background-color: #c0392b;
+}
+
+.product-description {
+    font-style: italic;
+    margin-bottom: 5px;
 }
 
 /* Pseudo-elements - Sale badge */
